@@ -53,6 +53,13 @@ class PageSignals:
     status_code: Optional[int] = None
     content_html: str = ""
 
+    def __post_init__(self) -> None:
+        """Keep derived length fields in sync with raw text fields."""
+        self.title_length = len(self.title) if self.title else 0
+        self.meta_description_length = (
+            len(self.meta_description) if self.meta_description else 0
+        )
+
     def to_analysis_dict(self) -> Dict[str, Any]:
         """Convert signals to a dictionary suitable for AI analysis."""
         return {
@@ -178,11 +185,11 @@ class SignalExtractor:
         signals.h2_tags = self._extract_headings("h2")
         signals.h3_tags = self._extract_headings("h3")
 
-        # Content analysis
-        signals.word_count = self._count_words()
-
         # Schema markup
         signals.schema_types = self._extract_schema_types()
+
+        # Content analysis
+        signals.word_count = self._count_words()
 
         # Social meta tags
         signals.og_title = self._extract_og_tag("og:title")
@@ -243,22 +250,35 @@ class SignalExtractor:
         # JSON-LD schemas
         for script in self.soup.find_all("script", type="application/ld+json"):
             try:
-                schema_data = json.loads(script.string or "")
-                if isinstance(schema_data, dict):
-                    schema_type = schema_data.get("@type")
+                raw_json = script.string or script.get_text(strip=True)
+                if not raw_json:
+                    continue
+                schema_data = json.loads(raw_json)
+
+                payloads: List[Any]
+                if isinstance(schema_data, list):
+                    payloads = schema_data
+                else:
+                    payloads = [schema_data]
+
+                for payload in payloads:
+                    if not isinstance(payload, dict):
+                        continue
+
+                    schema_type = payload.get("@type")
                     if schema_type:
                         if isinstance(schema_type, list):
-                            schema_types.extend(schema_type)
+                            schema_types.extend(str(item) for item in schema_type)
                         else:
                             schema_types.append(str(schema_type))
-                    # Check nested @graph
-                    graph = schema_data.get("@graph", [])
+
+                    graph = payload.get("@graph", [])
                     if isinstance(graph, list):
                         for item in graph:
                             if isinstance(item, dict) and "@type" in item:
                                 item_type = item["@type"]
                                 if isinstance(item_type, list):
-                                    schema_types.extend(item_type)
+                                    schema_types.extend(str(entry) for entry in item_type)
                                 else:
                                     schema_types.append(str(item_type))
             except (json.JSONDecodeError, TypeError):

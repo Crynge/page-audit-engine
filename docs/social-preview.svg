@@ -1,0 +1,23 @@
+<svg width="1280" height="640" viewBox="0 0 1280 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="640" fill="#07111F"/>
+  <rect x="48" y="48" width="1184" height="544" rx="28" fill="#0F1B2D" stroke="#20334F"/>
+  <rect x="88" y="92" width="300" height="34" rx="17" fill="#123357"/>
+  <text x="112" y="115" fill="#93C5FD" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="600">AI Search Audit Toolkit</text>
+  <text x="88" y="200" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="56" font-weight="700">Page Audit Engine</text>
+  <text x="88" y="252" fill="#BFDBFE" font-family="Segoe UI, Arial, sans-serif" font-size="26">GEO + AEO + VEO page-level analysis for structured SEO automation.</text>
+  <text x="88" y="310" fill="#94A3B8" font-family="Segoe UI, Arial, sans-serif" font-size="22">Extract metadata, schema, headings, links, images, and AI-search signals.</text>
+  <text x="88" y="344" fill="#94A3B8" font-family="Segoe UI, Arial, sans-serif" font-size="22">Return prioritized fixes as JSON for CI, cron jobs, dashboards, and n8n.</text>
+  <rect x="88" y="406" width="216" height="64" rx="18" fill="#2563EB"/>
+  <text x="118" y="447" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="700">Crynge / Sameer</text>
+  <rect x="716" y="130" width="422" height="336" rx="24" fill="#081323" stroke="#1D4ED8"/>
+  <text x="748" y="184" fill="#93C5FD" font-family="Consolas, monospace" font-size="22">Audit Summary</text>
+  <text x="748" y="236" fill="white" font-family="Consolas, monospace" font-size="22">GEO findings</text>
+  <text x="1040" y="236" fill="#F8FAFC" font-family="Consolas, monospace" font-size="22">3</text>
+  <text x="748" y="282" fill="white" font-family="Consolas, monospace" font-size="22">AEO findings</text>
+  <text x="1040" y="282" fill="#F8FAFC" font-family="Consolas, monospace" font-size="22">4</text>
+  <text x="748" y="328" fill="white" font-family="Consolas, monospace" font-size="22">VEO findings</text>
+  <text x="1040" y="328" fill="#F8FAFC" font-family="Consolas, monospace" font-size="22">2</text>
+  <text x="748" y="374" fill="#FCA5A5" font-family="Consolas, monospace" font-size="22">Critical errors</text>
+  <text x="1040" y="374" fill="#FCA5A5" font-family="Consolas, monospace" font-size="22">1</text>
+  <text x="748" y="426" fill="#86EFAC" font-family="Consolas, monospace" font-size="22">Priority fixes shipped in JSON</text>
+</svg>

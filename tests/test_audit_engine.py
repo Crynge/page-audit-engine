@@ -112,7 +112,7 @@ class TestSignalExtractor:
         signals = extractor.extract()
         
         assert signals.title == "Test Page Title"
-        assert signals.title_length == 16
+        assert signals.title_length == 15
     
     def test_extract_meta_description(self, sample_html):
         """Test meta description extraction."""

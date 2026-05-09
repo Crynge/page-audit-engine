@@ -56,8 +56,21 @@ class Config:
         )
 
 
-# Global configuration instance (lazy-loaded)
+def _config_signature() -> tuple[Optional[str], ...]:
+    """Capture the environment values that materially change configuration."""
+    return (
+        os.getenv("OPENAI_API_KEY"),
+        os.getenv("OPENAI_BASE_URL"),
+        os.getenv("OPENAI_MODEL"),
+        os.getenv("REQUEST_TIMEOUT"),
+        os.getenv("MAX_RETRIES"),
+        os.getenv("USER_AGENT"),
+    )
+
+
+# Global configuration instance (lazy-loaded and invalidated on env changes)
 _config: Optional[Config] = None
+_config_env_signature: Optional[tuple[Optional[str], ...]] = None
 
 
 def get_config() -> Config:
@@ -67,9 +80,11 @@ def get_config() -> Config:
     Returns:
         Config: The application configuration.
     """
-    global _config
-    if _config is None:
+    global _config, _config_env_signature
+    current_signature = _config_signature()
+    if _config is None or _config_env_signature != current_signature:
         _config = Config.from_environment()
+        _config_env_signature = current_signature
     return _config
 
 
@@ -82,6 +97,7 @@ def reload_config() -> Config:
     Returns:
         Config: Fresh configuration instance.
     """
-    global _config
+    global _config, _config_env_signature
     _config = Config.from_environment()
+    _config_env_signature = _config_signature()
     return _config

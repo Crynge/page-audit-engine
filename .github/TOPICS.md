@@ -1,0 +1,12 @@
+page-audit
+geo
+aeo
+veo
+seo
+technical-seo
+ai-search
+openai
+python
+search-visibility
+content-audit
+schema-markup
